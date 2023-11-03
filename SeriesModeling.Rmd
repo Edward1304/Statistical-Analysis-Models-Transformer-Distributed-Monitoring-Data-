@@ -1,0 +1,50 @@
+---
+title: "Relacion la energia total entregada (KWH) y el nivel de aceite(OLI)"
+output: html_notebook
+---
+
+```{r}
+analizeDb = read.csv("C:\\Users\\Usuario\\OneDrive - Universidad Nacional de Colombia\\Documentos\\NATIONAL UNIVERSITY OF  COLOMBIA\\SEEDBEBS\\Seeds of Statistics\\Data  Anlyze (Edward)\\modeling\\trfmMntr_DB.csv")
+View(analizeDb)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+
+colums_correlation <-analizeDb[,c("KWH","OLI")]
+correlation_matrix <- cor(colums_correlation, method = "pearson")
+print(correlation_matrix)
+```
+
+```{r}
+plot(colums_correlation)
+Reg <- lm(analizeDb$OLI ~ analizeDb$KWH)
+abline(Reg, col= "red",lwd = 2)
+
+```
+
+```{r}
+Reg
+summary(Reg)
+```
+
+# Modelo  de regresion 
+
+Dado el modelo de regresion $y_i = \beta_0 + B_i x_i + e_i$ :
+
+-   $y_i$ : Variable dependiente : "OLI"
+
+$x_i$ : Variable independiente :"KWH"
+
+$\beta_0$ : intercepto : 36.88
+
+$\beta_i$ : Coeficiente de correlacion : $0.0002174 \quad o \quad(2.174^{e-04}).$
+
+$e_i:$ error : $ei \sim N(0, \sigma^2)$
+
+$$OLI =  36.88 + KMH \cdot 0.0002174 + e_i$$
